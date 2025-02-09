@@ -41,7 +41,10 @@ public class SandboxMapas
      */
     public List<String> getValoresComoLista( )
     {
-        return null;
+        Collection<String> val=mapaCadenas.values();
+        List<String> list=new java.util.ArrayList<>(val);
+        java.util.Collections.sort(list);
+        return list;
     }
 
     /**
@@ -50,7 +53,9 @@ public class SandboxMapas
      */
     public List<String> getLlavesComoListaInvertida( )
     {
-        return null;
+        List<String> llaves = new java.util.ArrayList<>(mapaCadenas.keySet());
+        llaves.sort(java.util.Comparator.reverseOrder()); // Ordena en orden lexicográfico inverso
+        return llaves;
     }
 
     /**
@@ -61,7 +66,16 @@ public class SandboxMapas
      */
     public String getPrimera( )
     {
-        return null;
+        if (mapaCadenas.isEmpty()) {
+            return null;
+        }
+        String primera = null;
+        for (String llave : mapaCadenas.keySet()) {
+            if (primera == null || llave.compareTo(primera) < 0) {
+                primera = llave;
+            }
+        }
+        return primera;
     }
 
     /**
@@ -72,7 +86,16 @@ public class SandboxMapas
      */
     public String getUltima( )
     {
-        return null;
+        if (mapaCadenas.isEmpty()) {
+            return null;
+        }
+        String ultima = null;
+        for (String valor : mapaCadenas.values()) {
+            if (ultima == null || valor.compareTo(ultima) > 0) {
+                ultima = valor;
+            }
+        }
+        return ultima;
     }
 
     /**
@@ -83,7 +106,11 @@ public class SandboxMapas
      */
     public Collection<String> getLlaves( )
     {
-        return null;
+        Map<String, String> mayusculas = new HashMap<>();
+        for (String llave : mapaCadenas.keySet()) {
+            mayusculas.put(llave.toUpperCase(), mapaCadenas.get(llave));
+        }
+        return mayusculas.keySet();
     }
 
     /**
@@ -92,7 +119,11 @@ public class SandboxMapas
      */
     public int getCantidadCadenasDiferentes( )
     {
-        return -1;
+        Map<String, Integer> diferentes = new HashMap<>();
+        for (String valor : mapaCadenas.values()) {
+            diferentes.put(valor, 1);
+        }
+        return diferentes.size();
     }
 
     /**
@@ -104,7 +135,9 @@ public class SandboxMapas
      */
     public void agregarCadena( String cadena )
     {
-
+        StringBuilder sb = new StringBuilder(cadena);
+        String llave = sb.reverse().toString();
+        mapaCadenas.put(llave, cadena);
     }
 
     /**
@@ -113,7 +146,7 @@ public class SandboxMapas
      */
     public void eliminarCadenaConLLave( String llave )
     {
-
+        mapaCadenas.remove(llave);
     }
 
     /**
@@ -122,7 +155,9 @@ public class SandboxMapas
      */
     public void eliminarCadenaConValor( String valor )
     {
-
+        StringBuilder sb = new StringBuilder(valor);
+        String llave = sb.reverse().toString();
+        mapaCadenas.remove(llave);
     }
 
     /**
@@ -133,7 +168,13 @@ public class SandboxMapas
      */
     public void reiniciarMapaCadenas( List<Object> objetos )
     {
-
+        mapaCadenas.clear();
+        for (Object obj : objetos) {
+            String valor = obj.toString();
+            StringBuilder sb = new StringBuilder(valor);
+            String llave = sb.reverse().toString();
+            mapaCadenas.put(llave, valor);
+        }
     }
 
     /**
@@ -141,7 +182,11 @@ public class SandboxMapas
      */
     public void volverMayusculas( )
     {
-
+        Map<String, String> nuevoMapa = new HashMap<>();
+        for (Map.Entry<String, String> entry : mapaCadenas.entrySet()) {
+            nuevoMapa.put(entry.getKey().toUpperCase(), entry.getValue());
+        }
+        mapaCadenas = nuevoMapa;
     }
 
     /**
@@ -151,7 +196,13 @@ public class SandboxMapas
      */
     public boolean compararValores( String[] otroArreglo )
     {
-        return false;
+        Collection<String> valores = mapaCadenas.values();
+        for (String elemento : otroArreglo) {
+            if (!valores.contains(elemento)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
