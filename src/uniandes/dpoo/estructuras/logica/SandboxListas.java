@@ -158,7 +158,7 @@ public class SandboxListas
      */
     public void eliminarEnteroPorPosicion( int posicion )
     {
-        if  (posicion < listaEnteros.size() && posicion>=0 ) listaEnteros.remove(posicion);
+        if  (posicion<listaEnteros.size()&&posicion>=0 ) listaEnteros.remove(posicion);
     }
 
     /**
@@ -193,7 +193,7 @@ public class SandboxListas
     public void volverPositivos( )
     {
         for (int i=0; i<listaEnteros.size(); i++) {
-            if (listaEnteros.get(i)<0) listaEnteros.set(i, listaEnteros.get(i)* -1);}
+            if (listaEnteros.get(i)<0) listaEnteros.set(i, listaEnteros.get(i)*-1);}
     }
 
     /**
@@ -266,7 +266,7 @@ public class SandboxListas
             }
             if (!contado) {
                 int c=0;
-                for (int j=0; j < listaEnteros.size(); j++) {
+                for (int j=0; j<listaEnteros.size(); j++) {
                     if (listaEnteros.get(j) == actual) c++;}
                 if (c>1) {
                     repetidos++;
